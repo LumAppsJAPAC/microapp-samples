@@ -1,0 +1,225 @@
+[
+  {
+    "id": "a615ff74-5017-4462-bbf9-ee336afe00f8",
+    "name": "Confimed",
+    "code": "confimed",
+    "position": {
+      "x": 1248,
+      "y": 0
+    },
+    "links": [],
+    "type": "adaptive_card",
+    "settings": {
+      "template": {
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "body": [
+          {
+            "text": "確認ありがとうございます",
+            "type": "TextBlock"
+          }
+        ],
+        "type": "AdaptiveCard",
+        "version": "1.5"
+      }
+    }
+  },
+  {
+    "id": "ddfb4ed5-ff78-4cde-bbcf-5727e0281d38",
+    "name": "Mark as read",
+    "code": "mark_as_read",
+    "position": {
+      "x": 1020,
+      "y": 0
+    },
+    "links": [
+      {
+        "targetId": "a615ff74-5017-4462-bbf9-ee336afe00f8",
+        "type": "default"
+      }
+    ],
+    "type": "api_call",
+    "settings": {
+      "authentication": {
+        "method": "lumapps",
+        "providerType": "lumapps"
+      },
+      "endpoint": {
+        "httpMethod": "POST",
+        "body": "{\n    \"uid\": \"${actions.unread_new_content.inputs.uid}\"\n}",
+        "path": "/_ah/api/lumsites/v1/notification/setRead",
+        "queryParams": [],
+        "url": ""
+      }
+    }
+  },
+  {
+    "id": "b24f2a76-7867-419e-a03a-0a01bbd3a0ff",
+    "name": "Unread new content",
+    "code": "unread_new_content",
+    "position": {
+      "x": 684,
+      "y": 0
+    },
+    "links": [
+      {
+        "targetId": "ddfb4ed5-ff78-4cde-bbcf-5727e0281d38",
+        "type": "default"
+      },
+      {
+        "targetId": "d777d83c-7a36-4787-a1cf-475764b6d3b6",
+        "type": "default"
+      }
+    ],
+    "type": "adaptive_card",
+    "settings": {
+      "template": {
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "body": [
+          {
+            "url": "https://gcloud.devoteam.com/wp-content/uploads/sites/32/2021/10/LumApps-Logo-1.png",
+            "size": "Large",
+            "type": "Image"
+          },
+          {
+            "type": "Container",
+            "$when": "${empty($root.actions.filter_notification_type.output.filteredNotifications)}",
+            "items": [
+              {
+                "text": "未読のコンテンツはありません。",
+                "type": "TextBlock",
+                "wrap": true
+              }
+            ]
+          },
+          {
+            "type": "Container",
+            "$when": "${not(empty($root.actions.filter_notification_type.output.filteredNotifications))}",
+            "items": [
+              {
+                "id": "${notification.isRead}",
+                "type": "Container",
+                "$data": "${actions.filter_notification_type.output.filteredNotifications}",
+                "items": [
+                  {
+                    "text": "日付：\n${formatDateTime(notification.createdAt, 'YYYY-MM-DD')}",
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "color": "Dark",
+                    "weight": "Default",
+                    "fontType": "Default"
+                  },
+                  {
+                    "text": "タイトル\n${notification.title.ja}",
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "weight": "Bolder"
+                  },
+                  {
+                    "text": "概要：${notification.contentDetails.excerpt.ja}",
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "style": "default",
+                    "horizontalAlignment": "Left"
+                  },
+                  {
+                    "type": "ActionSet",
+                    "actions": [
+                      {
+                        "url": "${notification.contentDetails.url}",
+                        "type": "Action.OpenUrl",
+                        "title": "開く"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "ActionSet",
+                    "actions": [
+                      {
+                        "id": "read",
+                        "data": {
+                          "uid": "${notification.uid}"
+                        },
+                        "type": "Action.Execute",
+                        "verb": "readNotification",
+                        "style": "destructive",
+                        "title": "確認しました"
+                      }
+                    ]
+                  }
+                ],
+                "style": "warning"
+              }
+            ]
+          }
+        ],
+        "type": "AdaptiveCard",
+        "version": "1.5"
+      }
+    }
+  },
+  {
+    "id": "ebbb8bee-1916-434e-b254-92a0fc05c105",
+    "name": "Filter notification type",
+    "code": "filter_notification_type",
+    "position": {
+      "x": 456,
+      "y": 0
+    },
+    "links": [
+      {
+        "targetId": "b24f2a76-7867-419e-a03a-0a01bbd3a0ff",
+        "type": "default"
+      }
+    ],
+    "type": "function",
+    "settings": {
+      "language": "javascript",
+      "source": "// /**\n//  * Process data from the execution context in order to either reformat or create new data.\n//  * @param {Object} executionContext  The execution context as a freezed object, you cannot update it directly.\n//  * @returns {Object}                 The result of your data processing which will be available in the next execution context.\n//  */\n// function main(executionContext) {\n// \t// Access the notifications array from the response\n// \tconst notifications = executionContext.actions.get_notifications.response.body.items;\n\n// \t// Filter only \"content_new\" notifications\n// \tconst contentNewNotifications = notifications.filter(\n//         notification => notification?.notification?.type === \"content_new\" &&\n//         notification?.notification?.isRead === false\n// \t);\n\n// \t// Return the filtered list\n// \treturn {\n// \t\tfilteredNotifications: contentNewNotifications\n// \t};\n// }\n\n/**\n * Process data from the execution context in order to either reformat or create new data.\n * @param {Object} executionContext  The execution context as a freezed object, you cannot update it directly.\n * @returns {Object}                 The result of your data processing which will be available in the next execution context.\n */\nfunction main(executionContext) {\n\t// Access the notifications array from the response\n\tconst notifications = executionContext.actions.get_notifications.response.body.items;\n\n\t// Filter only \"content_new\" notifications that are unread\n\tconst contentNewNotifications = notifications.filter(\n        notification => notification?.notification?.type === \"content_new\" &&\n        notification?.notification?.isRead === false\n\t);\n\n\t// Get only the first 3 items\n\tconst firstThreeItems = contentNewNotifications.slice(0, 3);\n\n\t// Return the filtered list\n\treturn {\n\t\tfilteredNotifications: firstThreeItems\n\t};\n}"
+    }
+  },
+  {
+    "id": "381b5ca6-32ab-4c16-81a3-eb3e61505ae2",
+    "name": "Get notifications",
+    "code": "get_notifications",
+    "position": {
+      "x": 228,
+      "y": 0
+    },
+    "links": [
+      {
+        "targetId": "ebbb8bee-1916-434e-b254-92a0fc05c105",
+        "type": "default"
+      }
+    ],
+    "type": "api_call",
+    "settings": {
+      "authentication": {
+        "method": "lumapps",
+        "providerType": "lumapps"
+      },
+      "endpoint": {
+        "httpMethod": "POST",
+        "body": "{\n    \"maxResults\": 3\n}",
+        "path": "/_ah/api/lumsites/v1/notification/list",
+        "queryParams": [],
+        "url": ""
+      }
+    }
+  },
+  {
+    "id": "45715daa-afe3-4cbe-8c83-9c9228cbf40c",
+    "name": "Start",
+    "code": "start",
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "links": [
+      {
+        "targetId": "381b5ca6-32ab-4c16-81a3-eb3e61505ae2",
+        "type": "default"
+      }
+    ],
+    "type": "trigger"
+  }
+]

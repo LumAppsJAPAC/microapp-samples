@@ -1,0 +1,67 @@
+[
+  {
+    "id": "52e843fb-05ea-4cd4-9c3c-703d8c194790",
+    "name": "SAP給与明細",
+    "code": "s_a_p_",
+    "position": {
+      "x": 228,
+      "y": 0
+    },
+    "links": [],
+    "type": "adaptive_card",
+    "settings": {
+      "template": {
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "body": [
+          {
+            "type": "ColumnSet",
+            "columns": [
+              {
+                "type": "Column",
+                "items": [
+                  {
+                    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/SAP_2011_logo.svg/2560px-SAP_2011_logo.svg.png",
+                    "size": "Medium",
+                    "type": "Image"
+                  }
+                ],
+                "width": "auto"
+              }
+            ]
+          },
+          {
+            "text": "給与明細のダウンロードはこちらから",
+            "type": "TextBlock",
+            "wrap": true
+          }
+        ],
+        "type": "AdaptiveCard",
+        "version": "1.6",
+        "actions": [
+          {
+            "url": "https://lumapps.com",
+            "type": "Action.OpenUrl",
+            "style": "positive",
+            "title": "給与明細ダウンロード"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "8e172e8b-a2f4-4f4f-8396-535ddc3192ca",
+    "name": "Start",
+    "code": "start",
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "links": [
+      {
+        "targetId": "52e843fb-05ea-4cd4-9c3c-703d8c194790",
+        "type": "default"
+      }
+    ],
+    "type": "trigger"
+  }
+]

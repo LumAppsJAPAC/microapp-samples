@@ -1,0 +1,145 @@
+[
+  {
+    "id": "55a593cb-0a1b-45d3-b384-3d58b4bf6832",
+    "name": "SAP休暇申請",
+    "code": "s_a_p_",
+    "position": {
+      "x": 228,
+      "y": 0
+    },
+    "links": [],
+    "type": "adaptive_card",
+    "settings": {
+      "template": {
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "body": [
+          {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/SAP_2011_logo.svg/2560px-SAP_2011_logo.svg.png",
+            "size": "Large",
+            "type": "Image"
+          },
+          {
+            "type": "ColumnSet",
+            "columns": [
+              {
+                "type": "Column",
+                "items": [
+                  {
+                    "id": "typeofleave",
+                    "type": "Input.ChoiceSet",
+                    "label": "休暇種類",
+                    "choices": [
+                      {
+                        "title": "病欠",
+                        "value": "Choice 1"
+                      },
+                      {
+                        "title": "休暇",
+                        "value": "Choice 2"
+                      },
+                      {
+                        "title": "育休",
+                        "value": "Choice 3"
+                      }
+                    ],
+                    "placeholder": "休暇の種別を選んでください"
+                  }
+                ],
+                "style": "emphasis",
+                "width": "stretch",
+                "borderRadius": "8px"
+              }
+            ]
+          },
+          {
+            "type": "ColumnSet",
+            "columns": [
+              {
+                "type": "Column",
+                "items": [
+                  {
+                    "id": "startDate",
+                    "type": "Input.Date",
+                    "label": "から"
+                  },
+                  {
+                    "id": "startDatePeriod",
+                    "type": "Input.ChoiceSet",
+                    "style": "expanded",
+                    "choices": [
+                      {
+                        "title": "午前",
+                        "value": "morning"
+                      },
+                      {
+                        "title": "午後",
+                        "value": "afternoon"
+                      }
+                    ],
+                    "placeholder": "Placeholder text"
+                  }
+                ],
+                "width": "stretch"
+              },
+              {
+                "type": "Column",
+                "items": [
+                  {
+                    "id": "endDate",
+                    "type": "Input.Date",
+                    "label": "まで"
+                  },
+                  {
+                    "id": "endDatePeriod",
+                    "type": "Input.ChoiceSet",
+                    "style": "expanded",
+                    "choices": [
+                      {
+                        "title": "午前",
+                        "value": "morning"
+                      },
+                      {
+                        "title": "午後",
+                        "value": "afternoon"
+                      }
+                    ],
+                    "placeholder": "Placeholder text"
+                  }
+                ],
+                "width": "stretch"
+              }
+            ]
+          },
+          {
+            "type": "ActionSet",
+            "actions": [
+              {
+                "type": "Action.Execute",
+                "style": "positive",
+                "title": "申請"
+              }
+            ]
+          }
+        ],
+        "type": "AdaptiveCard",
+        "version": "1.6"
+      }
+    }
+  },
+  {
+    "id": "10c81ab0-fa05-4fc2-b926-46ffce6b3c03",
+    "name": "Start",
+    "code": "start",
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "links": [
+      {
+        "targetId": "55a593cb-0a1b-45d3-b384-3d58b4bf6832",
+        "type": "default"
+      }
+    ],
+    "type": "trigger"
+  }
+]
