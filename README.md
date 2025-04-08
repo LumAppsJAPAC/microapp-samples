@@ -1,5 +1,6 @@
 # microapp-samples
 マイクロアプリのサンプル集
+[LumApps-Logo-RGB-Optimist Yellow.pdf](https://github.com/user-attachments/files/19645221/LumApps-Logo-RGB-Optimist.Yellow.pdf)
 
 コンテンツ：<br>
 01. LumApps未読・既読ウィジェット<br>
