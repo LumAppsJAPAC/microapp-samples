@@ -1,0 +1,156 @@
+[
+  {
+    "id": "1ce8884c-8114-4b73-b868-6a0b19dc7b04",
+    "name": "List ticket",
+    "code": "list_ticket",
+    "position": {
+      "x": 684,
+      "y": 0
+    },
+    "links": [],
+    "type": "adaptive_card",
+    "settings": {
+      "template": {
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "body": [
+          {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Jira_%28Software%29_logo.svg",
+            "type": "Image"
+          },
+          {
+            "type": "Container",
+            "$data": "${actions.get_ticket.response.body.issues}",
+            "items": [
+              {
+                "type": "ColumnSet",
+                "style": "accent",
+                "columns": [
+                  {
+                    "type": "Column",
+                    "items": [
+                      {
+                        "text": "作成済みチケット",
+                        "type": "TextBlock",
+                        "wrap": true
+                      },
+                      {
+                        "size": "Medium",
+                        "text": "ステータス：${fields.status.name}",
+                        "type": "TextBlock",
+                        "wrap": true,
+                        "style": "default"
+                      },
+                      {
+                        "size": "Medium",
+                        "text": "概要：${fields.summary}",
+                        "type": "TextBlock",
+                        "wrap": true
+                      },
+                      {
+                        "text": "作成日：${formatDateTime(fields.created, 'YYYY-MM-DD')}",
+                        "type": "TextBlock",
+                        "wrap": true,
+                        "color": "Dark",
+                        "spacing": "Medium"
+                      },
+                      {
+                        "type": "ActionSet",
+                        "actions": [
+                          {
+                            "url": "https://lumapps.atlassian.net/browse/${key}",
+                            "type": "Action.OpenUrl",
+                            "style": "positive",
+                            "title": "開く"
+                          }
+                        ]
+                      }
+                    ],
+                    "width": "stretch"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "type": "AdaptiveCard",
+        "version": "1.5"
+      }
+    }
+  },
+  {
+    "id": "e4679ef5-c984-4893-9122-297288573bc6",
+    "name": "Get ticket",
+    "code": "get_ticket",
+    "position": {
+      "x": 456,
+      "y": 0
+    },
+    "links": [
+      {
+        "targetId": "1ce8884c-8114-4b73-b868-6a0b19dc7b04",
+        "type": "default"
+      }
+    ],
+    "type": "api_call",
+    "settings": {
+      "authentication": {
+        "method": "connector",
+        "providerType": "jira"
+      },
+      "endpoint": {
+        "httpMethod": "GET",
+        "body": "",
+        "path": "/rest/api/3/search?jql=reporter=${actions.get_user.response.body[0].accountId}&maxResults=3",
+        "queryParams": [],
+        "url": ""
+      },
+      "providerType": "jira"
+    }
+  },
+  {
+    "id": "886b10a3-59b1-4557-936d-d53d7418d934",
+    "name": "Get user",
+    "code": "get_user",
+    "position": {
+      "x": 228,
+      "y": 0
+    },
+    "links": [
+      {
+        "targetId": "e4679ef5-c984-4893-9122-297288573bc6",
+        "type": "default"
+      }
+    ],
+    "type": "api_call",
+    "settings": {
+      "authentication": {
+        "method": "connector",
+        "providerType": "jira"
+      },
+      "endpoint": {
+        "httpMethod": "GET",
+        "body": "",
+        "path": "/rest/api/3/user/search?query=${user.email}",
+        "queryParams": [],
+        "url": ""
+      },
+      "providerType": "jira"
+    }
+  },
+  {
+    "id": "6321049f-98c3-43b6-846c-09cad8175f56",
+    "name": "Start",
+    "code": "start",
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "links": [
+      {
+        "targetId": "886b10a3-59b1-4557-936d-d53d7418d934",
+        "type": "default"
+      }
+    ],
+    "type": "trigger"
+  }
+]
