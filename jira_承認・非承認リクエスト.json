@@ -1,0 +1,569 @@
+[
+  {
+    "id": "fdfbc592-18ca-4f2d-8198-3b14d9f9e974",
+    "name": "Get transitions",
+    "code": "get_transitions",
+    "position": {
+      "x": 564,
+      "y": -180
+    },
+    "links": [],
+    "type": "api_call",
+    "settings": {
+      "authentication": {
+        "method": "connector",
+        "providerType": "jira"
+      },
+      "endpoint": {
+        "httpMethod": "GET",
+        "body": "",
+        "path": "/rest/api/3/issue/PF-3264/transitions",
+        "queryParams": [],
+        "url": ""
+      }
+    }
+  },
+  {
+    "id": "71df19ba-0b3f-4673-91d1-dbf1d21c6ca4",
+    "name": "Reject not Ok",
+    "code": "reject_not_ok",
+    "position": {
+      "x": 1416,
+      "y": 288
+    },
+    "links": [],
+    "type": "adaptive_card",
+    "settings": {
+      "template": {
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "body": [
+          {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Jira_%28Software%29_logo.svg",
+            "type": "Image"
+          },
+          {
+            "size": "Medium",
+            "text": "チケットが否認されませんでした。",
+            "type": "TextBlock",
+            "color": "Light",
+            "style": "heading",
+            "weight": "Bolder",
+            "fontType": "Monospace",
+            "horizontalAlignment": "Center"
+          }
+        ],
+        "type": "AdaptiveCard",
+        "version": "1.5"
+      }
+    }
+  },
+  {
+    "id": "9f53734f-3371-439b-befb-79da0bb7e082",
+    "name": "Reject Ok",
+    "code": "reject_ok",
+    "position": {
+      "x": 1416,
+      "y": 36
+    },
+    "links": [],
+    "type": "adaptive_card",
+    "settings": {
+      "template": {
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "body": [
+          {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Jira_%28Software%29_logo.svg",
+            "type": "Image"
+          },
+          {
+            "size": "Large",
+            "text": "チケットが否認されました。",
+            "type": "TextBlock",
+            "color": "Accent",
+            "style": "heading",
+            "weight": "Bolder",
+            "fontType": "Monospace",
+            "horizontalAlignment": "Center"
+          }
+        ],
+        "type": "AdaptiveCard",
+        "version": "1.6"
+      }
+    }
+  },
+  {
+    "id": "fe6a988f-6a03-4307-82d0-20d8565eba5d",
+    "name": "Action fe6a988f-6a03-4307-82d0-20d8565eba5d",
+    "code": "action_fe_6_a_988_f_6_a_03_4307_82_d_0_20_d_8565_eba_5_d",
+    "position": {
+      "x": 1284,
+      "y": 228
+    },
+    "links": [
+      {
+        "targetId": "71df19ba-0b3f-4673-91d1-dbf1d21c6ca4",
+        "type": "default",
+        "isFallback": true
+      },
+      {
+        "targetId": "9f53734f-3371-439b-befb-79da0bb7e082",
+        "type": "default",
+        "conditions": {
+          "combinator": "AND",
+          "rulesGroup": [
+            {
+              "combinator": "OR",
+              "id": "8511",
+              "rules": [
+                {
+                  "id": "8512",
+                  "leftValue": "${actions.reject.response.status}",
+                  "operator": {
+                    "operation": "equals",
+                    "type": "number",
+                    "name": "MICROAPP.FILTER.OPERATION.EQUALS"
+                  },
+                  "rightValue": "204"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "type": "router"
+  },
+  {
+    "id": "bbcd27e2-a27b-4dc2-a7ad-9ee9f1af03ea",
+    "name": "Approve not ok",
+    "code": "approve_not_ok",
+    "position": {
+      "x": 1464,
+      "y": -120
+    },
+    "links": [],
+    "type": "adaptive_card",
+    "settings": {
+      "template": {
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "body": [
+          {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Jira_%28Software%29_logo.svg",
+            "type": "Image"
+          },
+          {
+            "size": "medium",
+            "text": "チケットが承認されませんでした。",
+            "type": "TextBlock",
+            "color": "Light",
+            "style": "heading",
+            "weight": "Bolder",
+            "fontType": "Monospace",
+            "horizontalAlignment": "Center"
+          }
+        ],
+        "type": "AdaptiveCard",
+        "version": "1.5"
+      }
+    }
+  },
+  {
+    "id": "8a6a7cb9-328b-4095-860f-8af68fde1f0c",
+    "name": "Approve Ok",
+    "code": "approve_ok",
+    "position": {
+      "x": 1452,
+      "y": -420
+    },
+    "links": [],
+    "type": "adaptive_card",
+    "settings": {
+      "template": {
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "body": [
+          {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Jira_%28Software%29_logo.svg",
+            "type": "Image"
+          },
+          {
+            "size": "Large",
+            "text": "チケットが承認されました。",
+            "type": "TextBlock",
+            "color": "Accent",
+            "style": "heading",
+            "weight": "Bolder",
+            "fontType": "Monospace",
+            "horizontalAlignment": "Center"
+          }
+        ],
+        "type": "AdaptiveCard",
+        "version": "1.6"
+      }
+    }
+  },
+  {
+    "id": "14f07c3d-9af8-488b-8b93-38c80c77ecaa",
+    "name": "Action 14f07c3d-9af8-488b-8b93-38c80c77ecaa",
+    "code": "action_14_f_07_c_3_d_9_af_8_488_b_8_b_93_38_c_80_c_77_ecaa",
+    "position": {
+      "x": 1320,
+      "y": -204
+    },
+    "links": [
+      {
+        "targetId": "bbcd27e2-a27b-4dc2-a7ad-9ee9f1af03ea",
+        "type": "default",
+        "isFallback": true
+      },
+      {
+        "targetId": "8a6a7cb9-328b-4095-860f-8af68fde1f0c",
+        "type": "default",
+        "conditions": {
+          "combinator": "AND",
+          "rulesGroup": [
+            {
+              "combinator": "OR",
+              "id": "5685",
+              "rules": [
+                {
+                  "id": "5686",
+                  "leftValue": "${actions.approve.response.status}",
+                  "operator": {
+                    "operation": "equals",
+                    "type": "number",
+                    "name": "MICROAPP.FILTER.OPERATION.EQUALS"
+                  },
+                  "rightValue": "204"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "type": "router"
+  },
+  {
+    "id": "3ab2a5f6-2e73-40de-9451-6d39f1333e07",
+    "name": "Approve ",
+    "code": "approve",
+    "position": {
+      "x": 1044,
+      "y": -144
+    },
+    "links": [
+      {
+        "targetId": "14f07c3d-9af8-488b-8b93-38c80c77ecaa",
+        "type": "default"
+      }
+    ],
+    "type": "api_call",
+    "settings": {
+      "authentication": {
+        "method": "connector",
+        "providerType": "jira"
+      },
+      "endpoint": {
+        "httpMethod": "POST",
+        "body": "{ \"transition\": { \"id\": \"41\" } }",
+        "path": "/rest/api/3/issue/${actions.list_ticket.inputs.ticketkey}/transitions",
+        "queryParams": [],
+        "url": ""
+      }
+    }
+  },
+  {
+    "id": "20b482aa-94b9-4eb5-be50-f879949da2b2",
+    "name": "Action 20b482aa-94b9-4eb5-be50-f879949da2b2",
+    "code": "action_20_b_482_aa_94_b_9_4_eb_5_be_50_f_879949_da_2_b_2",
+    "position": {
+      "x": 912,
+      "y": 48
+    },
+    "links": [
+      {
+        "targetId": "3ab2a5f6-2e73-40de-9451-6d39f1333e07",
+        "type": "default",
+        "conditions": {
+          "combinator": "AND",
+          "rulesGroup": [
+            {
+              "combinator": "OR",
+              "id": "2729",
+              "rules": [
+                {
+                  "id": "2730",
+                  "leftValue": "${actions.list_ticket.submittedActionId}",
+                  "operator": {
+                    "operation": "contains",
+                    "type": "string",
+                    "name": "MICROAPP.FILTER.OPERATION.CONTAINS"
+                  },
+                  "rightValue": "approve"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "targetId": "3ab2a5f6-2e73-40de-9451-6d39f1333e07-1740992836874",
+        "type": "default",
+        "conditions": {
+          "combinator": "AND",
+          "rulesGroup": [
+            {
+              "combinator": "OR",
+              "id": "2898",
+              "rules": [
+                {
+                  "id": "2899",
+                  "leftValue": "${actions.list_ticket.submittedActionId}",
+                  "operator": {
+                    "operation": "contains",
+                    "type": "string",
+                    "name": "MICROAPP.FILTER.OPERATION.CONTAINS"
+                  },
+                  "rightValue": "reject"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "type": "router"
+  },
+  {
+    "id": "1ce8884c-8114-4b73-b868-6a0b19dc7b04",
+    "name": "List ticket",
+    "code": "list_ticket",
+    "position": {
+      "x": 684,
+      "y": 0
+    },
+    "links": [
+      {
+        "targetId": "20b482aa-94b9-4eb5-be50-f879949da2b2",
+        "type": "default"
+      }
+    ],
+    "type": "adaptive_card",
+    "settings": {
+      "template": {
+        "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+        "body": [
+          {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Jira_%28Software%29_logo.svg",
+            "type": "Image"
+          },
+          {
+            "type": "Container",
+            "$data": "${actions.get_ticket.response.body.issues}",
+            "items": [
+              {
+                "type": "ColumnSet",
+                "style": "accent",
+                "columns": [
+                  {
+                    "type": "Column",
+                    "items": [
+                      {
+                        "text": "担当チケット",
+                        "type": "TextBlock",
+                        "wrap": true
+                      },
+                      {
+                        "size": "Medium",
+                        "text": "依頼元：${fields.reporter.emailAddress}",
+                        "type": "TextBlock",
+                        "wrap": true
+                      },
+                      {
+                        "size": "Medium",
+                        "text": "ステータス：${fields.status.name}",
+                        "type": "TextBlock",
+                        "wrap": true,
+                        "style": "default"
+                      },
+                      {
+                        "size": "Medium",
+                        "text": "概要：${fields.summary}",
+                        "type": "TextBlock",
+                        "wrap": true
+                      },
+                      {
+                        "text": "作成日：${formatDateTime(fields.created, 'YYYY-MM-DD')}",
+                        "type": "TextBlock",
+                        "wrap": true,
+                        "color": "Dark",
+                        "spacing": "Medium"
+                      },
+                      {
+                        "type": "ColumnSet",
+                        "columns": [
+                          {
+                            "type": "Column",
+                            "items": [
+                              {
+                                "type": "ActionSet",
+                                "actions": [
+                                  {
+                                    "url": "https://lumapps.atlassian.net/browse/${key}",
+                                    "type": "Action.OpenUrl",
+                                    "title": "開く"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "ActionSet",
+                                "actions": [
+                                  {
+                                    "id": "approve_${key}",
+                                    "data": {
+                                      "ticketkey": "${key}"
+                                    },
+                                    "type": "Action.Execute",
+                                    "style": "positive",
+                                    "title": "承認"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "ActionSet",
+                                "actions": [
+                                  {
+                                    "id": "reject_${key}",
+                                    "data": {
+                                      "ticketkey": "${key}"
+                                    },
+                                    "type": "Action.Execute",
+                                    "style": "destructive",
+                                    "title": "非承認"
+                                  }
+                                ]
+                              }
+                            ],
+                            "width": "stretch"
+                          }
+                        ]
+                      }
+                    ],
+                    "width": "stretch"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "type": "AdaptiveCard",
+        "version": "1.5"
+      }
+    }
+  },
+  {
+    "id": "e4679ef5-c984-4893-9122-297288573bc6",
+    "name": "Get ticket",
+    "code": "get_ticket",
+    "position": {
+      "x": 456,
+      "y": 0
+    },
+    "links": [
+      {
+        "targetId": "1ce8884c-8114-4b73-b868-6a0b19dc7b04",
+        "type": "default"
+      }
+    ],
+    "type": "api_call",
+    "settings": {
+      "authentication": {
+        "method": "connector",
+        "providerType": "jira"
+      },
+      "endpoint": {
+        "httpMethod": "GET",
+        "body": "",
+        "path": "/rest/api/3/search?jql=reporter=${actions.get_user.response.body[0].accountId} AND assignee=${actions.get_user.response.body[0].accountId}&maxResults=3",
+        "queryParams": [],
+        "url": ""
+      },
+      "providerType": "jira"
+    }
+  },
+  {
+    "id": "886b10a3-59b1-4557-936d-d53d7418d934",
+    "name": "Get user",
+    "code": "get_user",
+    "position": {
+      "x": 228,
+      "y": 0
+    },
+    "links": [
+      {
+        "targetId": "e4679ef5-c984-4893-9122-297288573bc6",
+        "type": "default"
+      }
+    ],
+    "type": "api_call",
+    "settings": {
+      "authentication": {
+        "method": "connector",
+        "providerType": "jira"
+      },
+      "endpoint": {
+        "httpMethod": "GET",
+        "body": "",
+        "path": "/rest/api/3/user/search?query=${user.email}",
+        "queryParams": [],
+        "url": ""
+      },
+      "providerType": "jira"
+    }
+  },
+  {
+    "id": "6321049f-98c3-43b6-846c-09cad8175f56",
+    "name": "Start",
+    "code": "start",
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "links": [
+      {
+        "targetId": "886b10a3-59b1-4557-936d-d53d7418d934",
+        "type": "default"
+      }
+    ],
+    "type": "trigger"
+  },
+  {
+    "id": "3ab2a5f6-2e73-40de-9451-6d39f1333e07-1740992836874",
+    "name": "Reject",
+    "code": "reject",
+    "position": {
+      "x": 1056,
+      "y": 180
+    },
+    "links": [
+      {
+        "targetId": "fe6a988f-6a03-4307-82d0-20d8565eba5d",
+        "type": "default"
+      }
+    ],
+    "type": "api_call",
+    "settings": {
+      "authentication": {
+        "method": "connector",
+        "providerType": "jira"
+      },
+      "endpoint": {
+        "httpMethod": "POST",
+        "body": "{ \"transition\": { \"id\": \"141\" } }",
+        "path": "/rest/api/3/issue/${actions.list_ticket.inputs.ticketkey}/transitions",
+        "queryParams": [],
+        "url": ""
+      }
+    }
+  }
+]
