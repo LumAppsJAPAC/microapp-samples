@@ -10,6 +10,7 @@
 05. SAP休暇申請
 06. SAP給与明細ダウンロード<br>
 07. Docusignリスト一覧<br>
+08. Concur予算承認
 
 使い方:<br>
 LumAppsの開発者プログラムに参加後<br>
